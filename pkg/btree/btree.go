@@ -11,7 +11,7 @@ func FromSlice(s []*int) *Node {
 }
 
 func fromSlice(s []*int, i int) *Node {
-	if len(s) == 0 || s[i] == nil {
+	if len(s) == 0 || i >= len(s) || s[i] == nil {
 		return nil
 	}
 
@@ -19,13 +19,8 @@ func fromSlice(s []*int, i int) *Node {
 		V: *s[i],
 	}
 
-	if j := 2*i + 1; j < len(s) && s[j] != nil {
-		node.L = fromSlice(s, j)
-	}
-
-	if j := 2*i + 2; j < len(s) && s[j] != nil {
-		node.R = fromSlice(s, j)
-	}
+	node.L = fromSlice(s, 2*i+1)
+	node.R = fromSlice(s, 2*i+2)
 
 	return node
 }
