@@ -69,29 +69,61 @@ func isEqual(a, b *Node) bool {
 func TestInOrderDFS(t *testing.T) {
 	tests := []struct {
 		name          string
-		root          *Node
+		treeSlice     []*int
 		expectedOrder []int
 	}{
 		{
 			name:          "Common case",
+			treeSlice:     []*int{rv(1), rv(2), rv(3), rv(4)},
 			expectedOrder: []int{4, 2, 1, 3},
-			root: &Node{
-				V: 1,
-				L: &Node{
-					V: 2,
-					L: &Node{
-						V: 4,
-					},
-				},
-				R: &Node{
-					V: 3,
-				},
-			},
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			assert.Equal(t, tt.expectedOrder, InOrderDFS(tt.root))
+			assert.Equal(t, tt.expectedOrder, InOrderDFS(FromSlice(tt.treeSlice)))
+		})
+	}
+}
+
+func TestPostOrderDFS(t *testing.T) {
+	tests := []struct {
+		name          string
+		treeSlice     []*int
+		expectedOrder []int
+	}{
+		{
+			name:          "Common case",
+			treeSlice:     []*int{rv(1), rv(2), rv(3), rv(4)},
+			expectedOrder: []int{4, 2, 3, 1},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equal(t, tt.expectedOrder, PostOrderDFS(FromSlice(tt.treeSlice)))
+		})
+	}
+}
+
+func TestPreOrderDFS(t *testing.T) {
+	tests := []struct {
+		name          string
+		treeSlice     []*int
+		expectedOrder []int
+	}{
+		{
+			name:          "case 1",
+			treeSlice:     []*int{rv(1), rv(2), rv(3), nil, nil, rv(4)},
+			expectedOrder: []int{1, 2, 3, 4},
+		},
+		{
+			name:          "case 2",
+			treeSlice:     []*int{rv(1), nil, rv(3), nil, nil, rv(4), nil},
+			expectedOrder: []int{1, 3, 4},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equal(t, tt.expectedOrder, PreOrderDFS(FromSlice(tt.treeSlice)))
 		})
 	}
 }

@@ -37,9 +37,7 @@ func InOrderDFS(root *Node) []int {
 		}
 
 		dfs(r.L)
-
 		result = append(result, r.V)
-
 		dfs(r.R)
 	}
 
@@ -49,9 +47,43 @@ func InOrderDFS(root *Node) []int {
 }
 
 func PreOrderDFS(root *Node) []int {
-	panic("")
+	var (
+		result = make([]int, 0)
+		dfs    func(*Node)
+	)
+
+	dfs = func(r *Node) {
+		if r == nil {
+			return
+		}
+
+		result = append(result, r.V)
+		dfs(r.L)
+		dfs(r.R)
+	}
+
+	dfs(root)
+
+	return result
 }
 
 func PostOrderDFS(root *Node) []int {
-	panic("")
+	var (
+		result = make([]int, 0)
+		dfs    func(*Node)
+	)
+
+	dfs = func(r *Node) {
+		if r == nil {
+			return
+		}
+
+		dfs(r.L)
+		dfs(r.R)
+		result = append(result, r.V)
+	}
+
+	dfs(root)
+
+	return result
 }
